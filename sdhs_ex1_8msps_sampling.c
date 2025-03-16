@@ -139,8 +139,8 @@ void main (void)
 	HSPLL_init(HSPLL_BASE, &hspllParam);
     //Power up UUPS to start PLL and wait
     UUPS_turnOnPower(UUPS_BASE, UUPS_POWERUP_TRIGGER_SOURCE_USSPWRUP);
-    while(UUPS_getPowerModeStatus(UUPS_BASE) != UUPS_POWERMODE_READY);  //wait for UUPS to power up
-    while(HSPLL_isLocked(HSPLL_BASE) == HSPLL_UNLOCKED);                //wait for PLL to lock
+    while(UUPS_getPowerModeStatus(UUPS_BASE) != UUPS_POWERMODE_READY);      //wait for UUPS to power up
+    while(HSPLL_isLocked(HSPLL_BASE) == HSPLL_UNLOCKED);                    //wait for PLL to lock
     /*End of HSPLL Configuration*/
     
     /*Setup SDHS (Sigma-Delta High Speed ADC)*/
@@ -252,7 +252,7 @@ void __attribute__ ((interrupt(SDHS_VECTOR))) SDHS_ISR(void)
 	case IIDX_1:   break;               	                // OVF interrupt
 	case IIDX_2:                        	                // ACQDONE interrupt
     	GPIO_toggleOutputOnPin(GPIO_PORT_PJ, GPIO_PIN1); 	// Toggle GPIO J.1 to show new cycle
-    	__delay_cycles(10000);                              // 10000 / 9400 = 1.0638s delay?
+    	__delay_cycles(10000);                              // 10000 / 16*10^6 = 625 us delay?
     	__no_operation();               	                //put breakpoint here to view results
     	break;
 	case IIDX_3:   break;               	                // SSTRG interrupt
